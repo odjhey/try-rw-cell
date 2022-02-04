@@ -1,36 +1,15 @@
-import { useEffect, useState } from "react";
-import { customFetch } from "./customFetch";
+import { useQuery } from "./hooks/useQuery";
 
 function App() {
-  const [data, setData] = useState();
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState();
-
-  useEffect(() => {
-    customFetch(
-      `
-    query Sam($limit:Int!){
+  const { data, error, loading } = useQuery(
+    `
+  query Sam($limit:Int!){
   samuraiList (pageParams:{limit: $limit, offset: 2}) {
     id name nickname age
   }
-}
-    `,
-      { limit: 1 }
-    )
-      .then((result) => {
-        console.log("result", result);
-        if (result.errors) {
-          throw result.errors;
-        }
-        setData(result);
-      })
-      .catch((e) => {
-        setError(e || e.message);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
-  }, []);
+}`,
+    { limit: 2 }
+  );
 
   return (
     <div>
