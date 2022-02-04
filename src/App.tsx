@@ -7,7 +7,7 @@ function App() {
     <div>
       <h1>Hello world</h1>
 
-      <SamuraiCell />
+      <SamuraiCell variables={{ limit: 4, offset: 2 }} />
     </div>
   );
 }
