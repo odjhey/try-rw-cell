@@ -1,4 +1,5 @@
 import { withStandardCell } from "./cells/withStandardCell";
+import { toast } from "react-toastify";
 
 export const QUERY = `
   query Sam($limit:Int!, $offset: Int!){
@@ -19,4 +20,15 @@ export const Success = (props: any) => {
   return <pre>{JSON.stringify(props.data, null, 2)}</pre>;
 };
 
-export default withStandardCell({ QUERY, Loading, Error, Success });
+export const onReceiveData = (data: any) => {
+  toast("Andito na cya");
+  return data;
+};
+
+export default withStandardCell({
+  QUERY,
+  Loading,
+  Error,
+  Success,
+  onReceiveData,
+});
