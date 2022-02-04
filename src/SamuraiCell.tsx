@@ -1,3 +1,5 @@
+import { withStandardCell } from "./cells/withStandardCell";
+
 export const QUERY = `
   query Sam($limit:Int!){
   samuraiList (pageParams:{limit: $limit, offset: 2}) {
@@ -13,3 +15,5 @@ export const Error = (error: any) => (
 export const Success = ({ data }: { data: any }) => (
   <pre>{JSON.stringify(data, null, 2)}</pre>
 );
+
+export default withStandardCell({ QUERY, Loading, Error, Success });
