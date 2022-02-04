@@ -3,6 +3,8 @@ import { customFetch } from "./customFetch";
 
 function App() {
   const [data, setData] = useState();
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState();
 
   useEffect(() => {
     customFetch(
@@ -14,15 +16,28 @@ function App() {
 }
     `,
       { limit: 1 }
-    ).then((result) => {
-      setData(result);
-    });
+    )
+      .then((result) => {
+        console.log("result", result);
+        if (result.errors) {
+          throw result.errors;
+        }
+        setData(result);
+      })
+      .catch((e) => {
+        setError(e || e.message);
+      })
+      .finally(() => {
+        setLoading(false);
+      });
   }, []);
 
   return (
     <div>
       <h1>Hello world</h1>
-      <pre>{JSON.stringify(data, null, 2)}</pre>
+      {loading && <p>...loading</p>}
+      {error && <pre>E {JSON.stringify(error, null, 2)}</pre>}
+      {data && <pre>D {JSON.stringify(data, null, 2)}</pre>}
     </div>
   );
 }
